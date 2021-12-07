@@ -1,19 +1,21 @@
 namespace Prog1
 {
-	// non-zero elements form an array
+	// Non-zero elements form an array.
+	// Each cell has a smaller sum of row and column
+	// than the one that follows it.
 	struct Cell
 	{
-		unsigned row;		// position in matrix
-		unsigned column;	// position in matrix
-		double value;		// it's value
-		struct Cell *next;
+		unsigned row;		// location in matrix
+		unsigned column;	// location in matrix
+		double value;		// element's value
+		struct Cell *next;	// pointer to the next non-zero element
 	};
 
 	struct Matrix
 	{
-		unsigned n_rows;	// number of rows
-		unsigned n_columns;	// number of columns
-		Cell *elements;	// pointer to array of it's non-zero elements
+		unsigned rows;		// number of rows
+		unsigned columns;	// number of columns
+		Cell *elements;		// pointer to array of it's non-zero elements
 	};
 
 	template <typename T>
@@ -21,8 +23,8 @@ namespace Prog1
 	{
 		std::cin >> num;
 		if (!std::cin.good())
-			return -1;	// input error
-		return 1;
+			return 1;	// input error
+		return 0;
 	}
 
 	inline bool isgreater(double a, double b)
@@ -34,7 +36,23 @@ namespace Prog1
 	{
 		return a < b;
 	}
-
+	
+	// 
 	int getMatrix();
 
+	inline void getNumLooped(T &num, const char *msg)
+	{
+		std::cout << msg;
+		while (getNum(&num))
+			std::cout << std::endl << "Input error! Try again -> ";
+		std::cout << std::endl;
+	}
+
+	// prints matrix
+	int output(Matrix);
+	
+	// looks for an element in certain position
+	// returns nullptr if there is not such element
+	// in other cases it throws exceptions
+	Cell *findCell(Cell *, unsigned row, unsigned column);
 }
